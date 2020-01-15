@@ -13,7 +13,8 @@
             'pro_neighborhood', 
             'pro_city', 
             'pro_state', 
-            'pro_country'
+            'pro_country',
+            'pro_complement'
         ];
 
         public $table = 'properties';

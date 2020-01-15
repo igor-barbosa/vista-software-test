@@ -42,6 +42,7 @@ CREATE TABLE `properties` (
   `pro_city` varchar(100) DEFAULT NULL,
   `pro_state` varchar(100) DEFAULT NULL,
   `pro_country` varchar(100) DEFAULT NULL,
+  `pro_complement` varchar(45) DEFAULT NULL,  
   PRIMARY KEY (`pro_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

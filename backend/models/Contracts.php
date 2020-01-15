@@ -26,5 +26,9 @@
         public function getContractsByPropertyOwnerId($id) {
             return $this->query("SELECT * FROM {$this->table} WHERE ct_po_id = {$id}");
         }
+
+        public function getContractsByPropertyId($id){
+            return $this->query("SELECT * FROM {$this->table} WHERE ct_pro_id = {$id}");
+        }
         
     }
