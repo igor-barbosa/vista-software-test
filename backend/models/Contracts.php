@@ -22,5 +22,9 @@
         public function getContractsByClientId($id) {
             return $this->query("SELECT * FROM {$this->table} WHERE ct_cl_id = {$id}");
         }
+
+        public function getContractsByPropertyOwnerId($id) {
+            return $this->query("SELECT * FROM {$this->table} WHERE ct_po_id = {$id}");
+        }
         
     }
