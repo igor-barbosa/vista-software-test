@@ -21,4 +21,4 @@
     $Properties = new Properties();
 
     $created = $Properties->create($data);
-    requestResponse(['data' => $created]);
+    requestResponse($created);

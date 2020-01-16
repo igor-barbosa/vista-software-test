@@ -3,4 +3,4 @@
 
     $PropertiesModel = new Properties();
 
-    requestResponse(['data' => $PropertiesModel->all()]);
+    requestResponse($PropertiesModel->all());

@@ -25,4 +25,4 @@
     }
 
     $deleted = $ClientModel->delete($clientId);
-    requestResponse(['data' => $deleted]);
+    requestResponse($deleted);

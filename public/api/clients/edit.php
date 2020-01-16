@@ -28,4 +28,4 @@
     }
 
     $updated = $ClientModel->update($clientId, $data);
-    requestResponse(['data' => $updated]);
+    requestResponse($updated);

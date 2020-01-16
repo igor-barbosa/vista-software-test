@@ -18,4 +18,4 @@
     }
 
     $created = $ClientModel->create($data);
-    requestResponse(['data' => $created]);
+    requestResponse($created);

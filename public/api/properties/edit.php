@@ -29,4 +29,4 @@
     $PropertiesModel = new Properties();
 
     $updated = $PropertiesModel->update($propertyId, $data);
-    requestResponse(['data' => $updated]);
+    requestResponse($updated);

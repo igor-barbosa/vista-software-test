@@ -28,4 +28,4 @@
     }
 
     $updated = $PropertyOwner->update($propertyOwnerId, $data);
-    requestResponse(['data' => $updated]);
+    requestResponse($updated);

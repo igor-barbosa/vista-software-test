@@ -32,4 +32,4 @@
     }
 
     $deleted = $PropertyOwnerModel->delete($propertyOwnerId);
-    requestResponse(['data' => $deleted]);
+    requestResponse($deleted);

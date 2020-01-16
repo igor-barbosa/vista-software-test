@@ -19,4 +19,4 @@
     }
 
     $created = $PropertyOwnerModel->create($data);
-    requestResponse(['data' => $created]);
+    requestResponse($created);
