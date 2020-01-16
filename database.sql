@@ -1,4 +1,4 @@
-CREATE DATABASE `imob` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE `imob` CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 
 CREATE TABLE `clients` (
   `cl_id` int(11) NOT NULL AUTO_INCREMENT,
