@@ -6,7 +6,7 @@ CREATE TABLE `clients` (
   `cl_phone` varchar(45) DEFAULT NULL,
   `cl_email` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`cl_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `contracts` (
   `ct_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -15,7 +15,7 @@ CREATE TABLE `contracts` (
   `ct_cl_id` int(11) DEFAULT NULL COMMENT 'ID DO CLIENTE',
   `ct_start_date` date DEFAULT NULL,
   `ct_end_date` date DEFAULT NULL,
-  `ct_administration_fee` decimal(8,2) DEFAULT NULL COMMENT 'TAXA DE ADMINSITRAÇÃO',
+  `ct_administration_fee` decimal(8,2) DEFAULT NULL COMMENT 'TAXA DE ADMINSITRAÇÃO (percentual)',
   `ct_rent_amount` decimal(8,2) DEFAULT NULL COMMENT 'VALOR DO ALUGUEL',
   `ct_condo_value` decimal(8,2) DEFAULT NULL COMMENT 'VALOR DO CONDOMÍNIO',
   `ct_IPTU` decimal(8,2) DEFAULT NULL,
@@ -27,10 +27,15 @@ CREATE TABLE `monthly_payments` (
   `mp_ct_id` int(11) NOT NULL COMMENT 'ID DO CONTRATO',
   `mp_order` int(11) DEFAULT NULL COMMENT 'NUMERO DA PARCELA ',
   `mp_date` date DEFAULT NULL,
-  `mp_payment_done` tinyint(4) DEFAULT NULL COMMENT 'PAGAMENTO DA MENSALIDADE DO CONTRATO.',
-  `mp_transfer_done` tinyint(4) DEFAULT NULL COMMENT 'CONDIÇÃO CASO A TAXA DE ADMINISTRAÇÃO TENHA SIDO REALIZADA OU NÃO.',
+  `mp_payment_done` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'PAGAMENTO DA MENSALIDADE DO CONTRATO.',
+  `mp_transfer_done` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'CONDIÇÃO CASO A TAXA DE ADMINISTRAÇÃO TENHA SIDO REALIZADA OU NÃO.',
+  `mp_rent_amount` decimal(8,2) DEFAULT NULL,
+  `mp_condo_value` decimal(8,2) DEFAULT NULL,
+  `mp_IPTU` decimal(8,2) DEFAULT NULL,
+  `mp_administration_fee` decimal(8,2) DEFAULT NULL COMMENT 'TAXA DE ADMINISTRAÇÃO ( R$ )',
   PRIMARY KEY (`mp_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `properties` (
   `pro_id` int(11) NOT NULL AUTO_INCREMENT,

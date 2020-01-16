@@ -31,4 +31,46 @@
             return $this->query("SELECT * FROM {$this->table} WHERE ct_pro_id = {$id}");
         }
         
+        /**
+         * Busca o contrato de um imóvel em andamento de acordo com
+         * o ID do imóvel e o período desejado. Dever ser utilizado para consultar se em um
+         * determinado período o imóvel estará disponível.
+         */
+        public function findContractInProgressByPropertyIdAndPeriod($id, $start, $end){
+            return $this->query("
+                SELECT * FROM {$this->table}
+                WHERE ct_pro_id = {$id}
+                AND (
+                    ct_start_date BETWEEN '{$start}' AND '{$end}' OR 
+                    ct_end_date BETWEEN '{$start}' AND '{$end}' OR
+                    ( ct_start_date <= '{$start}' AND ct_end_date >= '{$end}' )
+                );
+            ");
+        }
+        
+        public function delete($id) {
+            $monthly = new MonthlyPayments();
+            $payments = $monthly->deleteByContractId($id);
+            $contract = parent::delete($id);
+            $contract['monthly_payments'] = $payments;
+            return $contract;
+        }
+
+        public function getAllWithMonthlyPayments(){
+            $monthly = new MonthlyPayments();
+            $raw = [];
+            foreach($this->all() as $contract){
+                $contract['monthly_payments'] = $monthly->getPaymentsByContratId($contract['ct_id']);
+                $raw[] = $contract;
+            }
+            return $raw;
+        }
+
+        public function getMonthPaymentByContractIdAndOrder($contractId, $order){
+            return $this->pdo->query("
+                SELECT * FROM {$this->table} 
+                    INNER JOIN monthly_payments ON mp_ct_id = ct_id AND mp_order = '{$order}'   
+                WHERE ct_id={$contractId}                
+            ")->fetch(PDO::FETCH_ASSOC);
+        }
     }
