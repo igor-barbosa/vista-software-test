@@ -2,9 +2,9 @@
     require_once(__DIR__."/../../../backend/config.php");
 
     [$data, $errors] = Validation::validate($_POST, [
-        ['po_name', 'Nome Completo', Validation::isRequired()],
-        ['po_email', 'E-mail', Validation::isRequired()],
-        ['po_transfer_day', 'Dia para repasse', Validation::isRequired()]
+        ['po_name', 'Nome Completo', Validation::isRequired(), Validation::names(), Validation::max(80)],
+        ['po_email', 'E-mail', Validation::isRequired(), Validation::email(), Validation::max(150)],
+        ['po_transfer_day', 'Dia para repasse', Validation::isRequired(), Validation::numbers(), Validation::greaterThan(0), Validation::lessThan(28)]
     ]);
 
         
