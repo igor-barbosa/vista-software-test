@@ -8,6 +8,7 @@
     const DB_PASS = 'default';
 
     require_once(__DIR__."/libraries/index.php");
+    require_once(__DIR__."/services/index.php");
     require_once(__DIR__."/models/index.php");
 
     header("Access-Control-Allow-Origin: *");

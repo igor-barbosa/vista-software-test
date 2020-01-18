@@ -4,7 +4,6 @@
 
     $ContractsModel = new Contracts();
     $MonthlyPayments = new MonthlyPayments();
-    $PropertiesModel = new Properties();
 
     $ContractsService = new ContractsService();
 
@@ -16,14 +15,6 @@
         $ContractsModel
     );
 
-    $contract = $ContractsModel->create($data);
-
-    $contract['monthly_payments'] = [];
-
     $monthlyPayments = $ContractsService->calculateMonthlyPayments($data);
 
-    foreach($monthlyPayments as $payment) {        
-        $contract['monthly_payments'][] = $MonthlyPayments->create(array_merge($payment, ['mp_ct_id' => $contract['ct_id']]));
-    }
-
-    requestResponse($contract);
+    requestResponse($monthlyPayments);
