@@ -6,7 +6,7 @@ export default function HomePage(){
     
     return (
         <div>
-            <ClientForm />
+            HOME PAGE
         </div>
     );
 }

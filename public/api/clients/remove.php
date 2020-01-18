@@ -20,7 +20,7 @@
 
     if(count($ContractsModel->getContractsByClientId($clientId)) > 0) {
         requestResponse([
-            'messages' => ['Não é possível remover clientes vínculados a um contrato.']
+            'messages' => ['Não é possível remover um cliente vinculado a um contrato.']
         ], true);
     }
 

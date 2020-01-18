@@ -15,9 +15,6 @@
         ['cl_phone', 'Telefone', Validation::isRequired(), Validation::min(11), Validation::max(12), Validation::numbers()]
     ]);
         
-    $data['cl_name'] = trim($data['cl_name']);
-    $data['cl_name'] = trim($data['cl_email']);
-    $data['cl_name'] = trim($data['cl_phone']);
     
     if(count($errors) > 0) {        
         requestResponse(['messages' => $errors], true);

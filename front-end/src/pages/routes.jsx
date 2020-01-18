@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import LayoutAdmin from '../components/Layout/Admin';
 import HomePage from './Home';
+import ClientsManagementPage from './Clients/ManagementPage';
 
 
 export default function Routes(){
@@ -14,6 +15,7 @@ export default function Routes(){
             <LayoutAdmin>
                 <Switch>
                     <Route exact path="/" component={HomePage}/>
+                    <Route exact path="/clientes" component={ClientsManagementPage}/>
                 </Switch>
             </LayoutAdmin>
         </Router>
