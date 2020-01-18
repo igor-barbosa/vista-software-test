@@ -7,6 +7,7 @@ import {
 import LayoutAdmin from '../components/Layout/Admin';
 import HomePage from './Home';
 import ClientsManagementPage from './Clients/ManagementPage';
+import PropertyOwnerManagementPage from './PropertyOwner/ManagementPage';
 
 
 export default function Routes(){
@@ -16,6 +17,7 @@ export default function Routes(){
                 <Switch>
                     <Route exact path="/" component={HomePage}/>
                     <Route exact path="/clientes" component={ClientsManagementPage}/>
+                    <Route exact path="/proprietarios" component={PropertyOwnerManagementPage}/>
                 </Switch>
             </LayoutAdmin>
         </Router>
