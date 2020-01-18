@@ -26,6 +26,11 @@
     }
 
     $PropertiesModel = new Properties();
+    $PropertyOwnerModel = new PropertyOwner();
+
+    if(empty($PropertyOwnerModel->getById($data['pro_po_id']))) {
+        requestResponse(['messages' => ['Não foi possível identificar o proprietário do imóvel.']], true);
+    }
 
     $updated = $PropertiesModel->update($propertyId, $data);
     requestResponse($updated);

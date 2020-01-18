@@ -18,6 +18,12 @@
     }
 
     $Properties = new Properties();
+    $PropertyOwnerModel = new PropertyOwner();
+
+
+    if(empty($PropertyOwnerModel->getById($data['pro_po_id']))) {
+        requestResponse(['messages' => ['Não foi possível identificar o proprietário do imóvel.']], true);
+    }
 
     $created = $Properties->create($data);
     requestResponse($created);

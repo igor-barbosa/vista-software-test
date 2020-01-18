@@ -122,7 +122,7 @@
 
             return [
                 $rawData,
-                array_filter($errors)                
+                array_values(array_filter($errors))
             ];
         }
 
