@@ -29,7 +29,7 @@
         
         public static function names() {
             return function ($label, $value = null) {
-                if(!empty($value) && !preg_match('/^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\s\.]+/', $value)){
+                if(!empty($value) && !preg_match('/^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\s\.]+$/', $value)){
                     return "O campo \"{$label}\" deve conter apenas letras, espaço e/ou pontuação.";
                 }
             };
