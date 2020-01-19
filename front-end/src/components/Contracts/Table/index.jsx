@@ -7,12 +7,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button, IconButton, Icon } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { IconButton, Icon } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import * as PropTypes from 'prop-types'
+import {Link} from 'react-router-dom';
 
-import { bindActionCreators } from 'redux';
 import contractsActions from '../../../redux/contracts/actions';
 import ContractsService from '../../../services/ContractsService';
 
@@ -91,6 +91,9 @@ export default function ContractsTable(props) {
                                 <TableCell align="right">
                                     <IconButton size="small" onClick={handleRemove(contract.ct_id, key)}>
                                         <Icon>delete</Icon>
+                                    </IconButton>
+                                    <IconButton size="small" to={`/contratos/${contract.ct_id}`} component={Link}>
+                                        <Icon>keyboard_arrow_right</Icon>
                                     </IconButton>
                                 </TableCell>
                             </TableRow>

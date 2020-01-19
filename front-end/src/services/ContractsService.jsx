@@ -20,6 +20,13 @@ export default class ContractsService {
         return axios.post(`${enviroments.baseUrlApi}/api/contracts/calculate-monthly-payments.php`, Helpers.serializeFormData(data));
     }
 
+    static async getContractById(id) {
+        return axios.get(`${enviroments.baseUrlApi}/api/contracts/find.php?id=${id}`);
+    }
+
+    static async savePaymentStatus(id, order, data){
+        return axios.post(`${enviroments.baseUrlApi}/api/contracts/save-payment-status.php?id=${id}&order=${order}`, Helpers.serializeFormData(data));
+    }
     
 
 }
