@@ -17,6 +17,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { Link } from 'react-router-dom';
+import { Icon } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -79,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 export default function LayoutAdmin(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,7 +111,7 @@ export default function LayoutAdmin(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            IMOB
+            IMOBILIÁRIA
           </Typography>
         </Toolbar>
       </AppBar>
@@ -129,21 +131,40 @@ export default function LayoutAdmin(props) {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+            <ListItem button component={Link} to="/">
+              <ListItemIcon>
+                <img src="/images/home.svg" width={24} height={24}/>
+              </ListItemIcon>
+              <ListItemText primary="Início" />
+            </ListItem>          
+            
+            <ListItem button component={Link} to="/clientes">
+              <ListItemIcon>
+                <img src="/images/clients.svg" width={24} height={24}/>
+              </ListItemIcon>
+              <ListItemText primary="Clientes" />
             </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+            
+            <ListItem button component={Link} to="/imoveis">
+              <ListItemIcon>
+                <img src="/images/property.svg" width={24} height={24}/>
+              </ListItemIcon>
+              <ListItemText primary="Imóveis" />
             </ListItem>
-          ))}
+
+            <ListItem button component={Link} to="/proprietarios">
+              <ListItemIcon>
+                <img src="/images/property-owner.svg" width={24} height={24}/>
+              </ListItemIcon>
+              <ListItemText primary="Proprietários" />
+            </ListItem>
+            
+            <ListItem button component={Link} to="/contratos">
+              <ListItemIcon>
+                <img src="/images/contracts.svg" width={24} height={24}/>
+              </ListItemIcon>
+              <ListItemText primary="Contratos" />
+            </ListItem>
         </List>
       </Drawer>
       <main
