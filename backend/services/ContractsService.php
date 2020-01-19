@@ -101,10 +101,10 @@
                     'mp_date' => $mpDate,
                     'mp_payment_done' => 0,
                     'mp_trasnfer_done' => 0,
-                    'mp_rent_amount' => number_format($mpRentAmount, 2),
-                    'mp_condo_value' => number_format($mpCondoValue, 2),
-                    'mp_IPTU' => number_format($mpIPTU, 2),
-                    'mp_administration_fee' => number_format($mpAdministrationFee, 2)
+                    'mp_rent_amount' => number_format($mpRentAmount, 2, '.', ''),
+                    'mp_condo_value' => number_format($mpCondoValue, 2, '.', ''),
+                    'mp_IPTU' => number_format($mpIPTU, 2, '.', ''),
+                    'mp_administration_fee' => number_format($mpAdministrationFee, 2, '.', '')
                 ];
             }
 
