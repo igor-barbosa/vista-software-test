@@ -73,4 +73,20 @@
                 WHERE ct_id={$contractId}                
             ")->fetch(PDO::FETCH_ASSOC);
         }
+
+        public function getContractById($id) {            
+            $contract = $this->pdo->query("
+                SELECT * FROM {$this->table} 
+                    INNER JOIN clients ON cl_id = ct_cl_id
+                    INNER JOIN properties ON pro_id = ct_pro_id
+                    INNER JOIN property_owner ON po_id = ct_po_id
+                WHERE ct_id={$id}
+            ")->fetch(PDO::FETCH_ASSOC);
+
+            if(!empty($contract)) {
+                $contract['monthly_payments'] = (new MonthlyPayments())->getPaymentsByContratId($id);
+            }           
+            
+            return $contract;
+        }
     }

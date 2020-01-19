@@ -29,6 +29,6 @@
         }
 
         public function getPaymentsByContratId($id){
-            return $this->query("SELECT * FROM {$this->table} WHERE mp_ct_id = {$id}");
+            return $this->query("SELECT * FROM {$this->table} WHERE mp_ct_id = {$id} ORDER BY mp_order ASC");
         }
     }
