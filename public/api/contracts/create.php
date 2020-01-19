@@ -11,7 +11,7 @@
     $data = $ContractsService->createContractRequestValidation($_POST);
     $data = $ContractsService->createContractRequestConvertValues($data);
 
-    $ContractsService->createContractRequestCustomValidation(
+    $data = $ContractsService->createContractRequestCustomValidation(
         $data,
         $ContractsModel
     );
