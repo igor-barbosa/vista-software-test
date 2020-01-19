@@ -12,10 +12,15 @@
 
         public $table = '';
 
+        public static $connection = null;
+
 
         public function __construct(){            
-            $this->pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            if(empty(Model::$connection)) {
+                Model::$connection = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
+                Model::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }            
+            $this->pdo = Model::$connection;
         }
 
 
