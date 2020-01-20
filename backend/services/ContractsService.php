@@ -8,28 +8,37 @@
                 ['ct_cl_id', 'Cliente', Validation::isRequired(), Validation::numbers('Não foi possível identificar o cliente desejado.'), Validation::max(11)],
                 ['ct_start_date', 'Início da contratação', Validation::isRequired(), Validation::date()],
                 ['ct_end_date', 'Fim da contratação', Validation::isRequired(), Validation::date()],
-                ['ct_administration_fee', 'Taxa de Administração', Validation::isRequired(), Validation::numbers(), Validation::greaterThan(0), Validation::lessThan(100)],
+                ['ct_administration_fee', 'Taxa de Administração', Validation::isRequired(), Validation::money()],
                 ['ct_rent_amount', 'Aluguel', Validation::isRequired(), Validation::money(), Validation::max(13)],
                 ['ct_condo_value', 'Condomínio', Validation::isRequired(), Validation::money(), Validation::max(13)],    
                 ['ct_IPTU', 'IPTU', Validation::isRequired(), Validation::money(), Validation::max(13)]
             ]);
 
-            arrayTrim($data);
-
             if(count($errors) > 0) {        
                 requestResponse(['messages' => $errors], true);
             }
 
-            return $data;
-        }
-
-        public function createContractRequestConvertValues($data) {
             $data['ct_start_date'] = convertBrDate($data['ct_start_date']);
             $data['ct_end_date'] = convertBrDate($data['ct_end_date']);
             $data['ct_rent_amount'] = convertBrMoney($data['ct_rent_amount']);
             $data['ct_condo_value'] = convertBrMoney($data['ct_condo_value']);
-            $data['ct_IPTU'] = convertBrMoney($data['ct_IPTU']);
+            $data['ct_administration_fee'] = convertBrMoney($data['ct_administration_fee']);
+            $data['ct_IPTU'] = convertBrMoney($data['ct_IPTU']);            
+            arrayTrim($data);
 
+            [$data2, $errors2] = Validation::validate($data, [
+                ['ct_administration_fee','Taxa de Administração', Validation::greaterThan(0), Validation::lessThan(100)]
+            ]);
+
+            if(count($errors2) > 0) {        
+                requestResponse(['messages' => $errors2], true);
+            }
+
+            return array_merge($data, $data2);
+        }
+
+        public function createContractRequestConvertValues($data) {
+            
             return $data;
         }
 

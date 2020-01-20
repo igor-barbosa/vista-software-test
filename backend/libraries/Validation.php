@@ -91,7 +91,7 @@
 
         public static function money() {
             return function ($label, $value = null) {
-                if(!Validation::isEmpty($value) && !preg_match('/^((R\$\s)([0-9]{1,3})|([0-9]{1,3}))(((\.)([0-9]{3}))+)?(\,)([0-9]{2})$/', $value)){
+                if(!Validation::isEmpty($value) && !preg_match('/^((R\$\s)([0-9]{1,3})|([0-9]{1,3}))(((\.)([0-9]{3}))+)?((\,)([0-9]{2}))?$/', $value)){
                     return "O campo \"{$label}\" deve conter o formato : \"R$ 1.000,00\".";
                 }
             };
