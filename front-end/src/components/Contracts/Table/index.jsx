@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useSelector } from 'react-redux';
-import { IconButton, Icon } from '@material-ui/core';
+import { IconButton, Icon, Tooltip } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import * as PropTypes from 'prop-types'
 import {Link} from 'react-router-dom';
@@ -69,9 +69,7 @@ export default function ContractsTable(props) {
                             <TableCell align="center">Início</TableCell>
                             <TableCell align="center">Fim</TableCell>
                             <TableCell align="center">Taxa de Adm.</TableCell>
-                            <TableCell align="center">Aluguel</TableCell>
-                            <TableCell align="center">Condomínio</TableCell>
-                            <TableCell align="center">IPTU</TableCell>
+                            <TableCell align="center">Aluguel</TableCell>                            
                             <TableCell align="right">Opções</TableCell>
                         </TableRow>
                     </TableHead>
@@ -79,15 +77,22 @@ export default function ContractsTable(props) {
                         {contracts.list.map((contract, key) => (
                             <TableRow key={key}>
                                 <TableCell align="left">{contract.ct_id}</TableCell>
-                                <TableCell align="center">{contract.ct_pro_id}</TableCell>
-                                <TableCell align="center">{contract.ct_po_id}</TableCell>
-                                <TableCell align="center">{contract.ct_cl_id}</TableCell>
+                                <TableCell align="center">
+                                    <Tooltip title={`${contract.pro_cep} - ${contract.pro_street}, ${contract.pro_number}, ${contract.pro_neighborhood}, ${contract.pro_city}, ${contract.pro_state}`}>
+                                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                            <Icon>info</Icon> 
+                                                <span style={{marginLeft: '5px'}}>
+                                                {contract.pro_city}/{contract.pro_state}
+                                            </span>
+                                        </div>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell align="center">{contract.po_name}</TableCell>
+                                <TableCell align="center">{contract.cl_name}</TableCell>
                                 <TableCell align="center">{contract.ct_start_date.split('-').reverse().join('/')}</TableCell>
                                 <TableCell align="center">{contract.ct_end_date.split('-').reverse().join('/')}</TableCell>
                                 <TableCell align="center">{contract.ct_administration_fee}</TableCell>
-                                <TableCell align="center">{contract.ct_rent_amount}</TableCell>
-                                <TableCell align="center">{contract.ct_condo_value}</TableCell>
-                                <TableCell align="center">{contract.ct_IPTU}</TableCell>
+                                <TableCell align="center">{contract.ct_rent_amount}</TableCell>                                
                                 <TableCell align="right">
                                     <IconButton size="small" onClick={handleRemove(contract.ct_id, key)}>
                                         <Icon>delete</Icon>

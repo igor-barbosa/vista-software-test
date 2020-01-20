@@ -94,4 +94,14 @@
             
             return $contract;
         }
+
+        public function all(){
+             return $this->query("
+                SELECT * FROM {$this->table} 
+                    INNER JOIN clients ON cl_id = ct_cl_id AND cl_deleted_at IS NULL
+                    INNER JOIN properties ON pro_id = ct_pro_id AND pro_deleted_at IS NULL
+                    INNER JOIN property_owner ON po_id = ct_po_id AND po_deleted_at IS NULL
+                WHERE {$this->deletedAt} IS NULL
+            ");
+        }
     }
