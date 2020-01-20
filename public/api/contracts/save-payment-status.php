@@ -18,5 +18,6 @@
     }
 
     $updated = $MonthlyPaymentModel->update($monthlyPayment['mp_id'], $data);
+    $updated = $ContractsModel->calculateMonthlyPaymentStatus([$updated]);
 
-    requestResponse($updated);
+    requestResponse($updated[0]);

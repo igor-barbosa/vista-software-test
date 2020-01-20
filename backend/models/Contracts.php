@@ -59,7 +59,7 @@
             return $contract;
         }
 
-        private function calculateMonthlyPaymentStatus($monthlyPayments){
+        public function calculateMonthlyPaymentStatus($monthlyPayments){
             foreach($monthlyPayments as $key => $monthly) {
                 $expired = $monthly['mp_date'] < date('Y-m-d');
                 

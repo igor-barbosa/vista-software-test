@@ -79,10 +79,11 @@ export default function ContractsDetailsPage(props){
             enqueueSnackbar('Os dados foram salvos com sucesso.', {
                 variant: 'success'
             });
+            
             let newState ={...state};
             newState.data.monthly_payments[paymentConfig.key] = {
                 ...newState.data.monthly_payments[paymentConfig.key], 
-                ...data
+                ...resp.data.data
             }
             setState({
                 messages: [],
