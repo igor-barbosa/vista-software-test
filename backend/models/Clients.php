@@ -11,9 +11,10 @@
         ];
 
         public $table = 'clients';
+        public $deletedAt = 'cl_deleted_at';
 
         public function getClientByEmail($email){
-            $resp = $this->query('SELECT * FROM clients WHERE cl_email="'.$email.'"');
+            $resp = $this->query("SELECT * FROM clients WHERE cl_email='{$email}' AND {$this->deletedAt} IS NULL");
             if(count($resp)){
                 return $resp[0];
             }

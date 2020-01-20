@@ -5,6 +5,7 @@ CREATE TABLE `clients` (
   `cl_name` varchar(80) DEFAULT NULL,
   `cl_phone` varchar(45) DEFAULT NULL,
   `cl_email` varchar(150) DEFAULT NULL,
+  `cl_deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`cl_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
@@ -19,6 +20,7 @@ CREATE TABLE `contracts` (
   `ct_rent_amount` decimal(8,2) DEFAULT NULL COMMENT 'VALOR DO ALUGUEL',
   `ct_condo_value` decimal(8,2) DEFAULT NULL COMMENT 'VALOR DO CONDOMÍNIO',
   `ct_IPTU` decimal(8,2) DEFAULT NULL,
+  `ct_deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`ct_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -48,6 +50,7 @@ CREATE TABLE `properties` (
   `pro_state` varchar(100) DEFAULT NULL,
   `pro_country` varchar(100) DEFAULT NULL,
   `pro_complement` varchar(45) DEFAULT NULL,  
+  `pro_deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`pro_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -56,6 +59,7 @@ CREATE TABLE `property_owner` (
   `po_name` varchar(80) DEFAULT NULL,
   `po_email` varchar(150) DEFAULT NULL,
   `po_transfer_day` int(11) DEFAULT NULL COMMENT 'DIA DO REPASSE',
+  `po_deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`po_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

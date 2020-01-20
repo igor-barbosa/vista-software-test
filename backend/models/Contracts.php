@@ -19,16 +19,18 @@
             'ct_IPTU'
         ];
 
+        public $deletedAt = 'ct_deleted_at';
+        
         public function getContractsByClientId($id) {
-            return $this->query("SELECT * FROM {$this->table} WHERE ct_cl_id = {$id}");
+            return $this->query("SELECT * FROM {$this->table} WHERE ct_cl_id = {$id} AND {$this->deletedAt} IS NULL");
         }
 
         public function getContractsByPropertyOwnerId($id) {
-            return $this->query("SELECT * FROM {$this->table} WHERE ct_po_id = {$id}");
+            return $this->query("SELECT * FROM {$this->table} WHERE ct_po_id = {$id} AND {$this->deletedAt} IS NULL");
         }
 
         public function getContractsByPropertyId($id){
-            return $this->query("SELECT * FROM {$this->table} WHERE ct_pro_id = {$id}");
+            return $this->query("SELECT * FROM {$this->table} WHERE ct_pro_id = {$id} AND {$this->deletedAt} IS NULL");
         }
         
         /**
@@ -44,7 +46,8 @@
                     ct_start_date BETWEEN '{$start}' AND '{$end}' OR 
                     ct_end_date BETWEEN '{$start}' AND '{$end}' OR
                     ( ct_start_date <= '{$start}' AND ct_end_date >= '{$end}' )
-                );
+                )
+                AND {$this->deletedAt} IS NULL
             ");
         }
         
@@ -70,7 +73,8 @@
             return $this->pdo->query("
                 SELECT * FROM {$this->table} 
                     INNER JOIN monthly_payments ON mp_ct_id = ct_id AND mp_order = '{$order}'   
-                WHERE ct_id={$contractId}                
+                WHERE ct_id={$contractId}           
+                AND {$this->deletedAt} IS NULL     
             ")->fetch(PDO::FETCH_ASSOC);
         }
 
@@ -81,6 +85,7 @@
                     INNER JOIN properties ON pro_id = ct_pro_id
                     INNER JOIN property_owner ON po_id = ct_po_id
                 WHERE ct_id={$id}
+                AND {$this->deletedAt} IS NULL
             ")->fetch(PDO::FETCH_ASSOC);
 
             if(!empty($contract)) {

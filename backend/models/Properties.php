@@ -18,8 +18,10 @@
         ];
 
         public $table = 'properties';
+
+        public $deletedAt = 'pro_deleted_at';
     
         public function getPropertiesByPropertyOwnerId($id){
-            return $this->query("SELECT * FROM {$this->table} WHERE pro_po_id = {$id}");
+            return $this->query("SELECT * FROM {$this->table} WHERE pro_po_id = {$id} AND {$this->deletedAt} IS NULL");
         }
     }

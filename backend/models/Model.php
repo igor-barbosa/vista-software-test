@@ -12,6 +12,8 @@
 
         public $table = '';
 
+        public $deletedAt = null;
+
         public static $connection = null;
 
 
@@ -20,6 +22,9 @@
                 Model::$connection = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
                 Model::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }            
+            if($this->deletedAt){
+                $this->columns = array_merge($this->columns, [$this->deletedAt]);
+            }
             $this->pdo = Model::$connection;
         }
 
@@ -82,16 +87,22 @@
         }
 
         public function all(){
-            return $this->query("SELECT * FROM {$this->table}");
+            $withDeletedAt = ($this->deletedAt) ? " WHERE {$this->deletedAt} IS NULL" : "";
+            return $this->query("SELECT * FROM {$this->table} $withDeletedAt");
         }
 
         public function getById($id){
-            return $this->pdo->query("SELECT * FROM {$this->table} WHERE {$this->primaryKey}={$id}")->fetch(PDO::FETCH_ASSOC);
+            $withDeletedAt = ($this->deletedAt) ? " AND {$this->deletedAt} IS NULL" : "";
+            return $this->pdo->query("SELECT * FROM {$this->table} WHERE {$this->primaryKey}={$id} {$withDeletedAt}")->fetch(PDO::FETCH_ASSOC);
         }
 
         public function delete($id){
             $data = $this->getById($id);
-            $this->pdo->query("DELETE FROM {$this->table} WHERE {$this->primaryKey}={$id}");
+            if($this->deletedAt) {
+                $this->update($id, [$this->deletedAt => (new DateTime())->format('Y-m-d H:i:s')]);
+            } else {
+                $this->pdo->query("DELETE FROM {$this->table} WHERE {$this->primaryKey}={$id}");
+            }
             return $data;
         }
     }
