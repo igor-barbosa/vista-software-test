@@ -118,7 +118,7 @@ export default function PropertiesTable(props) {
                         {properties.list.map((property, key) => (
                             <TableRow key={key}>
                                 <TableCell align="left">{property.pro_id}</TableCell>
-                                <TableCell align="center">{property.pro_po_id}</TableCell>
+                                <TableCell align="center">{property.po_name}</TableCell>
                                 <TableCell align="center">{property.pro_cep}</TableCell>
                                 <TableCell align="center">{property.pro_street}</TableCell>
                                 <TableCell align="center">{property.pro_number}</TableCell>
