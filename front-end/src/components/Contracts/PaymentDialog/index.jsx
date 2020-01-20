@@ -72,7 +72,7 @@ export default function ContractsPaymentDialog(props) {
           <CardHeader title={`Mensalidade ${props.monthlyPayment.mp_order}/${props.contract.monthly_payments.length}`}/>
           <CardContent>
               <Grid container spacing={2}>
-                {props.messages.length && (
+                {props.messages.length > 0 && (
                   <Grid item xs={12} md={12}>
                     <CustomMessages messages={props.messages}/>
                   </Grid>

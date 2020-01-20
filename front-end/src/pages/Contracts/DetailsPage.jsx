@@ -275,7 +275,7 @@ export default function ContractsDetailsPage(props){
                                     <Table size="small" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell align="center" colSpan={9}>
+                                                <TableCell align="center" colSpan={11}>
                                                     <Typography>
                                                         Mensalidades
                                                     </Typography>    
