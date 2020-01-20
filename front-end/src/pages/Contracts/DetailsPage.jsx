@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useSnackbar } from 'notistack';
+import clsx from 'clsx';
 
-import {Card, CardHeader, CardContent, Typography, Grid, IconButton, Icon} from '@material-ui/core';
+import {Card, CardHeader, CardContent, Typography, Grid, IconButton, Icon, makeStyles} from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,8 +23,24 @@ const cardTitle = (cod) => (
     </span>
 )
 
+const useStyles = makeStyles({
+    paymentNotPending: {
+        color: 'rgb(148, 148, 148)'
+    },
+    paymentPending: {
+        color: 'red'
+    },
+    paymentReceived:{
+        color: 'green'
+    },
+    paymentSuccessfull: {
+        color: 'green'
+    }
+});
+
 export default function ContractsDetailsPage(props){
 
+    const classes = useStyles();
 
     const [state, setState] = useState({
         messages: [],
@@ -115,6 +132,14 @@ export default function ContractsDetailsPage(props){
         return (parseFloat(calculateAmountCharged(row)) - parseFloat(row.mp_administration_fee)).toFixed(2);
     }
 
+    function getRowColor(row, status){
+        return clsx({
+            [classes.paymentNotPending] : status === 'Em dia',
+            [classes.paymentPending] : status === 'Pendente',
+            [classes.paymentReceived] : status === 'Recebido',
+            [classes.paymentSuccessfull] : status === 'Realizado'
+        })
+    }
     return (
         <Card>
             {!!state.data && (
@@ -267,12 +292,14 @@ export default function ContractsDetailsPage(props){
                                                 <TableCell align="center">Cobrança</TableCell>       
                                                 <TableCell align="center">Repasse</TableCell>
                                                 <TableCell align="center">Taxa de Adm.</TableCell>                                                    
+                                                <TableCell align="center">Cobrança</TableCell>
+                                                <TableCell align="center">Repasse</TableCell>
                                                 <TableCell align="right">Opções</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                         {state.data.monthly_payments.map((row, key) => (
-                                            <TableRow key={row.mp_order}>                                                
+                                            <TableRow key={row.mp_order}>     
                                                 <TableCell align="center">{row.mp_order}/{state.data.monthly_payments.length}</TableCell>
                                                 <TableCell align="center">{row.mp_date.split('-').reverse().join('/')}</TableCell>
                                                 <TableCell align="center">{row.mp_rent_amount}</TableCell>
@@ -281,6 +308,8 @@ export default function ContractsDetailsPage(props){
                                                 <TableCell align="center">{calculateAmountCharged(row)}</TableCell>       
                                                 <TableCell align="center">{calculateRepasse(row)}</TableCell>
                                                 <TableCell align="center">{row.mp_administration_fee}</TableCell>
+                                                <TableCell align="center" className={getRowColor(row, row.mp_payment_up_to_date)}>{row.mp_payment_up_to_date}</TableCell>
+                                                <TableCell align="center" className={getRowColor(row, row.mp_transfer_performed)}>{row.mp_transfer_performed}</TableCell>
                                                 <TableCell align="right">
                                                     <IconButton size="small" onClick={handleOpenPaymentDialog(key)}>
                                                         <Icon>settings</Icon>

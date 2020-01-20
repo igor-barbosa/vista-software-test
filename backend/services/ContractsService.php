@@ -155,10 +155,6 @@
             if(count($errors) > 0) {        
                 requestResponse(['messages' => $errors], true);
             }
-
-            $data['mp_payment_done'] = ($data['mp_payment_done']) ? '1' : '0';
-            $data['mp_payment_done'] = ($data['mp_transfer_done']) ? '1' : '0';
-
             return $data;
         }
 

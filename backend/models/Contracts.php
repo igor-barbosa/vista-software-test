@@ -59,11 +59,37 @@
             return $contract;
         }
 
+        private function calculateMonthlyPaymentStatus($monthlyPayments){
+            foreach($monthlyPayments as $key => $monthly) {
+                $expired = $monthly['mp_date'] < date('Y-m-d');
+                
+                if($monthly['mp_payment_done'] != 1) {
+                    $monthlyPayments[$key]['mp_payment_up_to_date'] = ($expired) ? 'Pendente': 'Em dia' ;
+                } else {
+                    $monthlyPayments[$key]['mp_payment_up_to_date'] = 'Recebido' ;
+                }
+
+                if($monthly['mp_payment_done'] == 1){
+                    $monthlyPayments[$key]['mp_transfer_performed'] = ($monthly['mp_transfer_done'] != 1) ? 'Pendente': 'Realizado' ;
+                } else {
+                    if($monthly['mp_transfer_done'] != 1) {
+                        $monthlyPayments[$key]['mp_transfer_performed'] = ($expired) ? 'Pendente': 'Em dia' ;
+                    } else {
+                        $monthlyPayments[$key]['mp_transfer_performed'] = 'Realizado' ;
+                    }
+                }
+            }
+
+            return $monthlyPayments;
+        }
+
+
         public function getAllWithMonthlyPayments(){
-            $monthly = new MonthlyPayments();
+            $MonthlyPaymentsModel = new MonthlyPayments();
             $raw = [];
             foreach($this->all() as $contract){
-                $contract['monthly_payments'] = $monthly->getPaymentsByContratId($contract['ct_id']);
+                $contract['monthly_payments'] = $MonthlyPaymentsModel->getPaymentsByContratId($contract['ct_id']);
+                $contract['monthly_payments'] = $this->calculateMonthlyPaymentStatus($contract['monthly_payments']);
                 $raw[] = $contract;
             }
             return $raw;
@@ -90,6 +116,7 @@
 
             if(!empty($contract)) {
                 $contract['monthly_payments'] = (new MonthlyPayments())->getPaymentsByContratId($id);
+                $contract['monthly_payments'] = $this->calculateMonthlyPaymentStatus($contract['monthly_payments']);
             }           
             
             return $contract;
