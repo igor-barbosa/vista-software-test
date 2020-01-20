@@ -73,6 +73,15 @@
             };
         } 
 
+        public static function lessThanOrEqual($max) {
+            return function ($label, $value = null) use($max) {
+                $isLess = ((float) $value) <= $max;
+                if(!Validation::isEmpty($value) && !$isLess){
+                    return "O campo \"{$label}\" deve ser menor ou igual a {$max}.";
+                }
+            };
+        } 
+
         public static function date() {
             return function ($label, $value = null) {
                 if(!Validation::isEmpty($value)) {
