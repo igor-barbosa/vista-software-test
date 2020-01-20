@@ -19,7 +19,7 @@ export default function PropertiesManagementPage(){
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const handleRemove = (id, key) => {
-        actions.removePropertyOwner(key);
+        actions.removeProperty(key);
     }
 
     const handleFormSave = async (values, form) => {
