@@ -3,7 +3,7 @@ import { Formik, Field } from 'formik'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import { CardHeader, TextField, Grid, makeStyles, IconButton } from '@material-ui/core';
+import { CardHeader, TextField, Grid, makeStyles, IconButton, MenuItem } from '@material-ui/core';
 import * as Yup from 'yup';
 import LayoutLoadingOverlayArea from '../../Layout/Loading/OverlayArea';
 import CustomField from '../../Custom/Field';
@@ -64,6 +64,12 @@ export default function PropertyOwnerForm(props) {
 
     const fieldWidthMd = (!!props.fieldsFullWidth) ? 12 : 3;
 
+    function getTransferDays(){
+        const days = [];
+        for(let i=1; i <= 28;i++) days.push(`${i}`);
+        return days;
+    }
+
     return (
         <Formik 
             initialValues={props.initialValues} 
@@ -87,7 +93,13 @@ export default function PropertyOwnerForm(props) {
                                     <Field fullWidth name="po_email" label="E-mail" component={CustomField} />
                                 </Grid>
                                 <Grid item xs={12} md={fieldWidthMd}>
-                                    <Field fullWidth name="po_transfer_day" label="Dia de Repasse" component={CustomField} />
+                                    <Field fullWidth select name="po_transfer_day" label="Dia de Repasse" component={CustomField}>
+                                        <MenuItem value="" disabled>Selecione ...</MenuItem>
+                                        {getTransferDays().map((day, key) => (
+                                            <MenuItem value={day} key={key}>{day.padStart(2,'0')}</MenuItem>
+                                        ))}
+                                    </Field>
+                                    {/* <Field fullWidth name="po_transfer_day" label="Dia de Repasse" component={CustomField} /> */}
                                 </Grid>
                                 <Grid item xs={12} md={fieldWidthMd}>
                                     <div className={classes.buttonActionContainer}>
