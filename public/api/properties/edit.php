@@ -9,6 +9,6 @@
     $data = $PropertiesService->createOrEditRequestPropertiesValidation($_POST);
     $PropertiesService->createOrEditRequestPropertiesCustomValidation($data);
     
-    $updated = $PropertiesModel->update($propertyId, $data);
+    $updated = $PropertiesModel->updateProperty($propertyId, $data);
     
     requestResponse($updated);

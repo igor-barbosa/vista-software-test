@@ -7,6 +7,6 @@
     $data = $PropertiesService->createOrEditRequestPropertiesValidation($_POST);
     $PropertiesService->createOrEditRequestPropertiesCustomValidation($data);
      
-    $created = $Properties->create($data);
+    $created = $Properties->createProperty($data);
 
     requestResponse($created);
