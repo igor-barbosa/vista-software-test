@@ -10,7 +10,10 @@ export default class Helpers {
     }
 
     static convertToMoney(data){
-        return parseFloat(data).toLocaleString('pt-BR',{ style: 'currency', currency: 'BRL' });
+        if(data === '0' || !data) return 'R$ 0,00';
+        else {
+            return parseFloat(data).toLocaleString('pt-BR',{ style: 'currency', currency: 'BRL' });
+        }
     }
     
 }
