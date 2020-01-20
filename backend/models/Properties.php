@@ -24,4 +24,12 @@
         public function getPropertiesByPropertyOwnerId($id){
             return $this->query("SELECT * FROM {$this->table} WHERE pro_po_id = {$id} AND {$this->deletedAt} IS NULL");
         }
+
+        public function all() {
+            return $this->query("
+                SELECT * FROM {$this->table} 
+                    LEFT JOIN property_owner ON po_id = pro_po_id AND po_deleted_at IS NULL
+                WHERE {$this->deletedAt} IS NULL
+            ");
+        }
     }

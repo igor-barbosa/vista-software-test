@@ -3,7 +3,7 @@ import { Formik, Field } from 'formik'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import { CardHeader, Grid, makeStyles } from '@material-ui/core';
+import { CardHeader, Grid, makeStyles, MenuItem } from '@material-ui/core';
 import * as Yup from 'yup';
 import LayoutLoadingOverlayArea from '../../Layout/Loading/OverlayArea';
 import CustomField from '../../Custom/Field';
@@ -21,6 +21,11 @@ import Paper from '@material-ui/core/Paper';
 import { Icon as Iconify } from '@iconify/react';
 import broomIcon from '@iconify/icons-mdi/broom';
 import ContractsService from '../../../services/ContractsService';
+import PropertiesService from '../../../services/PropertiesService';
+import ClientService from '../../../services/ClientService';
+
+
+import { useEffect } from 'react';
 
 ContractsForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -89,6 +94,10 @@ export default function ContractsForm(props) {
         loading: false,
         compare: ''
     });
+
+    const [properties, setProperties] = useState([]);
+    const [clients, setClients] = useState([]);
+
 
     const handleCalculateMonthlyPayments = (form) => async () => {
         setMonthlyPayments({
@@ -160,6 +169,23 @@ export default function ContractsForm(props) {
         props.onSubmit(values, form);
     }
 
+    useEffect(() => {
+        (async () => {
+            const resp = await PropertiesService.getProperties();
+            if(!resp.data.error){
+                setProperties(resp.data.data);
+            } 
+        })()
+    },[])
+
+    useEffect(() => {
+        (async () => {
+            const resp = await ClientService.getClients();
+            if(!resp.data.error){
+                setClients(resp.data.data);
+            }
+        })()
+    },[])
 
     return (
         <Formik 
@@ -177,14 +203,25 @@ export default function ContractsForm(props) {
                                 />
                             )}
                             <Grid container spacing={3}>
+                                <Grid item xs={12} md={8}>
+                                    <Field fullWidth select name="ct_pro_id" label="Imóvel" component={CustomField}>
+                                        <MenuItem value="" disabled>Selecione ...</MenuItem>
+                                        {properties.map((property, key) => (
+                                            <MenuItem value={property.pro_id} key={key}>
+                                                {property.po_id} - {property.pro_cep} - {property.pro_street}, {property.pro_number}, {property.pro_neighborhood}, {property.pro_city}, {property.pro_state} ({property.po_name})
+                                            </MenuItem>
+                                        ))}
+                                    </Field>
+                                </Grid>               
                                 <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_pro_id" label="Imóvel" component={CustomField} />
-                                </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="propertyOwner" disabled label="Proprietário" component={CustomField} />
-                                </Grid>                                
-                                <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_cl_id" label="Cliente" component={CustomField} />
+                                    <Field fullWidth select name="ct_cl_id" label="Cliente" component={CustomField}>
+                                        <MenuItem value="" disabled>Selecione ...</MenuItem>
+                                        {clients.map((client, key) => (
+                                            <MenuItem value={client.cl_id} key={key}>
+                                                {client.cl_name}
+                                            </MenuItem>
+                                        ))}
+                                    </Field>
                                 </Grid>
                                 <Grid item xs={12} md={4}>
                                     <Field fullWidth name="ct_start_date" label="Início do contrato" component={CustomField} />
