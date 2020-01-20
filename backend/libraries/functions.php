@@ -1,5 +1,14 @@
 <?php
 
+if (!function_exists('mb_ucwords'))
+{
+	function mb_ucwords($str)
+	{
+		return mb_convert_case($str, MB_CASE_TITLE, "UTF-8");
+	}
+}
+
+
 function requestResponse($data, $isError = false) {
     header('Content-Type: application/json');
     echo json_encode([ 'error' => $isError, 'data' => $data ]);
@@ -30,7 +39,7 @@ function arrayTrim(&$array) {
 function convertArrayProperNames(&$array, $keys = []) {
     foreach($keys as $key){
         if(!empty($array[$key])){
-            $array[$key] = ucwords(strtolower($array[$key]));
+            $array[$key] = mb_ucwords(mb_strtolower($array[$key]));
         }
     }
 }
@@ -38,7 +47,7 @@ function convertArrayProperNames(&$array, $keys = []) {
 function arrayStrToLower(&$array, $keys = []) {
     foreach($keys as $key){
         if(!empty($array[$key])){
-            $array[$key] = strtolower($array[$key]);
+            $array[$key] = mb_strtolower($array[$key]);
         }
     }
 }
