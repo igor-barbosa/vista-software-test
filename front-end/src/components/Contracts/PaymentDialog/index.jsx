@@ -53,6 +53,15 @@ export default function ContractsPaymentDialog(props) {
   const handleSave = () => {
     props.onSave(paymentStates);
   }
+
+
+  function calculateAmountCharged(row) {
+    return (parseFloat(row.mp_rent_amount) + parseFloat(row.mp_condo_value) + parseFloat(row.mp_IPTU)).toFixed(2);
+  }
+
+  function calculateRepasse(row){
+      return (parseFloat(calculateAmountCharged(row)) - parseFloat(row.mp_administration_fee)).toFixed(2);
+  }
   return (    
       <Dialog
         open={props.open}
@@ -102,7 +111,7 @@ export default function ContractsPaymentDialog(props) {
                           </TableHead>
                           <TableBody>
                               <TableRow>
-                                  <TableCell>1500.00</TableCell>
+                                  <TableCell>{calculateAmountCharged(props.monthlyPayment)}</TableCell>
                                   <TableCell>{props.monthlyPayment.mp_date.split('-').reverse().join('/')}</TableCell>
                                   <TableCell>
                                     <TextField select value={`${paymentStates.mp_payment_done}`} size="small" name="mp_payment_done" onChange={handleChangePaymentStatus}>
@@ -127,7 +136,7 @@ export default function ContractsPaymentDialog(props) {
                           </TableHead>
                           <TableBody>
                               <TableRow>
-                                  <TableCell>1290.00</TableCell>
+                              <TableCell>{calculateRepasse(props.monthlyPayment)}</TableCell>
                                   <TableCell>{props.contract.po_transfer_day}</TableCell>
                                   <TableCell>
                                     <TextField select value={`${paymentStates.mp_transfer_done}`} size="small" name="mp_transfer_done" onChange={handleChangePaymentStatus}>

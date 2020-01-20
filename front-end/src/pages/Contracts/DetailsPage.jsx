@@ -107,6 +107,14 @@ export default function ContractsDetailsPage(props){
         })();
     }, [])
 
+    function calculateAmountCharged(row) {
+        return (parseFloat(row.mp_rent_amount) + parseFloat(row.mp_condo_value) + parseFloat(row.mp_IPTU)).toFixed(2);
+    }
+
+    function calculateRepasse(row){
+        return (parseFloat(calculateAmountCharged(row)) - parseFloat(row.mp_administration_fee)).toFixed(2);
+    }
+
     return (
         <Card>
             {!!state.data && (
@@ -242,7 +250,7 @@ export default function ContractsDetailsPage(props){
                                     <Table size="small" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell align="center" colSpan={7}>
+                                                <TableCell align="center" colSpan={9}>
                                                     <Typography>
                                                         Mensalidades
                                                     </Typography>    
@@ -255,19 +263,23 @@ export default function ContractsDetailsPage(props){
                                                 <TableCell align="center">Vencimento</TableCell>                                                    
                                                 <TableCell align="center">Aluguel</TableCell>                                                    
                                                 <TableCell align="center">Condomínio</TableCell>                                                    
-                                                <TableCell align="center">IPTU</TableCell>                                                    
+                                                <TableCell align="center">IPTU</TableCell>   
+                                                <TableCell align="center">Cobrança</TableCell>       
+                                                <TableCell align="center">Repasse</TableCell>
                                                 <TableCell align="center">Taxa de Adm.</TableCell>                                                    
                                                 <TableCell align="right">Opções</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                         {state.data.monthly_payments.map((row, key) => (
-                                            <TableRow key={row.mp_order}>
+                                            <TableRow key={row.mp_order}>                                                
                                                 <TableCell align="center">{row.mp_order}/{state.data.monthly_payments.length}</TableCell>
                                                 <TableCell align="center">{row.mp_date.split('-').reverse().join('/')}</TableCell>
                                                 <TableCell align="center">{row.mp_rent_amount}</TableCell>
                                                 <TableCell align="center">{row.mp_condo_value}</TableCell>
                                                 <TableCell align="center">{row.mp_IPTU}</TableCell>
+                                                <TableCell align="center">{calculateAmountCharged(row)}</TableCell>       
+                                                <TableCell align="center">{calculateRepasse(row)}</TableCell>
                                                 <TableCell align="center">{row.mp_administration_fee}</TableCell>
                                                 <TableCell align="right">
                                                     <IconButton size="small" onClick={handleOpenPaymentDialog(key)}>
