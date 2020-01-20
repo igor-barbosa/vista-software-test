@@ -7,7 +7,7 @@
     $propertyId = $PropertiesService->getUrlParamPropertyId();
 
     $data = $PropertiesService->createOrEditRequestPropertiesValidation($_POST);
-    $PropertiesService->createOrEditRequestPropertiesValidation($data);
+    $PropertiesService->createOrEditRequestPropertiesCustomValidation($data);
     
     $updated = $PropertiesModel->update($propertyId, $data);
     

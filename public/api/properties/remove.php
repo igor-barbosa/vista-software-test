@@ -5,6 +5,7 @@
     $PropertiesService = new PropertiesService();
     
     $propertyId = $PropertiesService->getUrlParamPropertyId();
-
+    $PropertiesService->removePropertyRequestCustomValidation($propertyId);
+    
     $deleted = $PropertiesModel->delete($propertyId);
     requestResponse($deleted);

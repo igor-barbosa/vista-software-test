@@ -39,16 +39,16 @@
             $PropertyOwnerModel = new PropertyOwner();
 
             if($data['ct_end_date'] < $data['ct_start_date']){
-                requestResponse(['messages' => 'A data final da contratação não pode ser menor do que a data inicial.'], true);
+                requestResponse(['messages' => ['A data final da contratação não pode ser menor do que a data inicial.']], true);
             }
 
             if(empty($ClientModel->getById($data['ct_cl_id']))){
-                requestResponse(['messages' => 'Não foi possível identificar o cliente desejado.'], true);
+                requestResponse(['messages' => ['Não foi possível identificar o cliente desejado.']], true);
             }
 
             $property = $PropertiesModel->getById($data['ct_pro_id']);
             if(empty($property)){
-                requestResponse(['messages' => 'Não foi possível identificar o imóvel desejado.'], true);
+                requestResponse(['messages' => ['Não foi possível identificar o imóvel desejado.']], true);
             }
 
             $data['ct_po_id'] = $property['pro_po_id'];
