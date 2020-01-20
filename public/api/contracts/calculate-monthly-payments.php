@@ -8,7 +8,6 @@
     $ContractsService = new ContractsService();
 
     $data = $ContractsService->createContractRequestValidation($_POST);
-    $data = $ContractsService->createContractRequestConvertValues($data);
 
     $data = $ContractsService->createContractRequestCustomValidation(
         $data,

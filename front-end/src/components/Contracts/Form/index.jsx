@@ -7,6 +7,10 @@ import { CardHeader, Grid, makeStyles, MenuItem } from '@material-ui/core';
 import * as Yup from 'yup';
 import LayoutLoadingOverlayArea from '../../Layout/Loading/OverlayArea';
 import CustomField from '../../Custom/Field';
+import CustomFieldCurrency from '../../Custom/Field/Currency';
+import NumberFormat from 'react-number-format';
+
+
 import CustomMessages from '../../Custom/Messages';
 import * as PropTypes from 'prop-types';
 
@@ -26,6 +30,7 @@ import ClientService from '../../../services/ClientService';
 
 
 import { useEffect } from 'react';
+import CustomFieldPercentual from '../../Custom/Field/Percentual';
 
 ContractsForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -98,6 +103,7 @@ export default function ContractsForm(props) {
     const [properties, setProperties] = useState([]);
     const [clients, setClients] = useState([]);
 
+    const [reRenderMaskedInputs, setReRenderMaskedInputs] = useState(1);
 
     const handleCalculateMonthlyPayments = (form) => async () => {
         setMonthlyPayments({
@@ -135,6 +141,13 @@ export default function ContractsForm(props) {
         }
     })();
 
+    const handleReRenderMaskedInputs = () => {
+        setReRenderMaskedInputs(0)
+        setTimeout(() => {
+            setReRenderMaskedInputs(1)
+        }, 50);
+    }
+
     const handleClear = (formProps) => () => {
         
         const form = {...formProps};
@@ -148,8 +161,8 @@ export default function ContractsForm(props) {
             formProps.resetForm();
         }
 
-        props.onClear(form)();
-        
+        props.onClear(form)();    
+        handleReRenderMaskedInputs();
         
     }
 
@@ -186,6 +199,7 @@ export default function ContractsForm(props) {
             }
         })()
     },[])
+
 
     return (
         <Formik 
@@ -230,18 +244,18 @@ export default function ContractsForm(props) {
                                     <Field fullWidth name="ct_end_date" label="Fim do contrato" component={CustomField} />
                                 </Grid>
                                 <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_administration_fee" label="Taxa de administração" component={CustomField} />
+                                    <Field fullWidth name="ct_administration_fee" label="Taxa de administração" component={CustomFieldPercentual} />
                                 </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_rent_amount" label="Aluguel" component={CustomField} />
-                                </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_condo_value" label="Condomínio" component={CustomField} />
-                                </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_IPTU" label="IPTU" component={CustomField} />
-                                </Grid>                            
 
+                                <Grid item xs={12} md={4}>
+                                    <Field fullWidth name="ct_rent_amount" label="Aluguel" component={CustomFieldCurrency}/>
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <Field fullWidth name="ct_condo_value" label="Condomínio" component={CustomFieldCurrency}/>
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <Field fullWidth name="ct_IPTU" label="IPTU" component={CustomFieldCurrency} />
+                                </Grid>
                                 
                                 <Grid item xs={12}>                                    
                                     {monthlyPayments.list.length > 0 && (
