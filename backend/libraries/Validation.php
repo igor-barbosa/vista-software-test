@@ -17,7 +17,7 @@
         public static function max($max) {
             return function ($label, $value = null) use($max) {
                 if(!Validation::isEmpty($value) && strlen($value) > $max){
-                    return "O campo \"{$label}\" deve conter no máximo {$max}.";
+                    return "O campo \"{$label}\" deve conter no máximo {$max} caracteres.";
                 }
             };
         }
@@ -25,7 +25,7 @@
         public static function min($min) {
             return function ($label, $value = null) use($min) {
                 if(!Validation::isEmpty($value) && strlen($value) < $min){
-                    return "O campo \"{$label}\" deve conter no mínimo {$min}.";
+                    return "O campo \"{$label}\" deve conter no mínimo {$min} caracteres.";
                 }
             };
         }  
