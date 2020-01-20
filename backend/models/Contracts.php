@@ -131,4 +131,16 @@
                 WHERE {$this->deletedAt} IS NULL
             ");
         }
+
+        public function createContract($data) {
+            $created = $this->create($data);
+            return $this->pdo->query("
+                SELECT * FROM {$this->table} 
+                    INNER JOIN clients ON cl_id = ct_cl_id AND cl_deleted_at IS NULL
+                    INNER JOIN properties ON pro_id = ct_pro_id AND pro_deleted_at IS NULL
+                    INNER JOIN property_owner ON po_id = ct_po_id AND po_deleted_at IS NULL
+                WHERE ct_id={$created['ct_id']}
+                AND {$this->deletedAt} IS NULL
+            ")->fetch(PDO::FETCH_ASSOC);
+        }
     }

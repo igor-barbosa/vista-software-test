@@ -16,7 +16,7 @@
         $ContractsModel
     );
 
-    $contract = $ContractsModel->create($data);
+    $contract = $ContractsModel->createContract($data);
 
     $contract['monthly_payments'] = [];
 
