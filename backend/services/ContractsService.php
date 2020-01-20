@@ -14,6 +14,7 @@
                 ['ct_IPTU', 'IPTU', Validation::isRequired(), Validation::money(), Validation::max(13)]
             ]);
 
+            arrayTrim($data);
 
             if(count($errors) > 0) {        
                 requestResponse(['messages' => $errors], true);
@@ -110,6 +111,58 @@
 
             return $response;
         }
+
+        public function getUrlParamContractId(){
+            $contractId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+            if($contractId === 0) {
+                requestResponse([
+                    'messages' => ['Não foi possível identificar o contrato desejado.']
+                ], true);
+            }
+
+            return $contractId;
+        }
+
+        public function getUrlParamOrder(){
+            $order = isset($_GET['order']) ? (int) $_GET['order'] : 0;
+
+            if($order === 0) {
+                requestResponse([
+                    'messages' => ['Não foi possível identificar a parcela desejada.']
+                ], true);
+            }
+
+            return $order;
+        }
+
+        public function removeContractRequestCustomValidation($contractId) {
+            $ContractsModel = new Contracts();
+
+            if(empty($ContractsModel->getById($contractId)) > 0) {
+                requestResponse([
+                    'messages' => ['Não foi possível identificar o contrato desejado.']
+                ], true);
+            }
+        }
+
+        public function savePaymentStatusRequestValidation($request) {
+            [$data, $errors] = Validation::validate($_POST, [
+                ['mp_payment_done', 'Status de Pagamento', Validation::isRequired(), Validation::numbers('Não foi possível identificar o status de pagamento.')],
+                ['mp_transfer_done', 'Status de Repasse', Validation::isRequired(), Validation::numbers('Não foi possível identificar o status de repasse.')],
+            ]);
+
+            if(count($errors) > 0) {        
+                requestResponse(['messages' => $errors], true);
+            }
+
+            $data['mp_payment_done'] = ($data['mp_payment_done']) ? '1' : '0';
+            $data['mp_payment_done'] = ($data['mp_transfer_done']) ? '1' : '0';
+
+            return $data;
+        }
+
+        
 
         /**
          * Obtem o dia da data específicada e verifica quantos dias faltam para 

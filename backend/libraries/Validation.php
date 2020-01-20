@@ -4,7 +4,7 @@
 
         public static function isRequired() {
             return function ($label, $value = null) {
-                if(empty($value) || trim($value) === ''){
+                if((empty($value) && $value != 0) || trim($value) === ''){
                     return "O campo \"{$label}\" é obrigatório.";
                 }
             };
