@@ -9,6 +9,7 @@ import * as PropTypes from 'prop-types';
 import ClientForm from '.';
 import { Card, CardHeader, CardContent, Grid, IconButton, Icon, makeStyles, TableContainer, Table, TableHead, TableRow, TableCell, Paper, TableBody, TextField, MenuItem} from '@material-ui/core';
 import CustomMessages from '../../Custom/Messages';
+import Helpers from '../../../helpers';
 
 
 ContractsPaymentDialog.propTypes = {
@@ -90,10 +91,10 @@ export default function ContractsPaymentDialog(props) {
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                <TableCell>{props.monthlyPayment.mp_rent_amount}</TableCell>
-                                <TableCell>{props.monthlyPayment.mp_condo_value}</TableCell>
-                                <TableCell>{props.monthlyPayment.mp_IPTU}</TableCell>
-                                <TableCell>{props.monthlyPayment.mp_administration_fee}</TableCell>
+                                <TableCell>{Helpers.convertToMoney(props.monthlyPayment.mp_rent_amount)}</TableCell>
+                                <TableCell>{Helpers.convertToMoney(props.monthlyPayment.mp_condo_value)}</TableCell>
+                                <TableCell>{Helpers.convertToMoney(props.monthlyPayment.mp_IPTU)}</TableCell>
+                                <TableCell>{Helpers.convertToMoney(props.monthlyPayment.mp_administration_fee)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -111,7 +112,7 @@ export default function ContractsPaymentDialog(props) {
                           </TableHead>
                           <TableBody>
                               <TableRow>
-                                  <TableCell>{calculateAmountCharged(props.monthlyPayment)}</TableCell>
+                                  <TableCell>{Helpers.convertToMoney(calculateAmountCharged(props.monthlyPayment))}</TableCell>
                                   <TableCell>{props.monthlyPayment.mp_date.split('-').reverse().join('/')}</TableCell>
                                   <TableCell>
                                     <TextField select value={`${paymentStates.mp_payment_done}`} size="small" name="mp_payment_done" onChange={handleChangePaymentStatus}>
@@ -136,7 +137,7 @@ export default function ContractsPaymentDialog(props) {
                           </TableHead>
                           <TableBody>
                               <TableRow>
-                              <TableCell>{calculateRepasse(props.monthlyPayment)}</TableCell>
+                              <TableCell>{Helpers.convertToMoney(calculateRepasse(props.monthlyPayment))}</TableCell>
                                   <TableCell>{props.contract.po_transfer_day}</TableCell>
                                   <TableCell>
                                     <TextField select value={`${paymentStates.mp_transfer_done}`} size="small" name="mp_transfer_done" onChange={handleChangePaymentStatus}>

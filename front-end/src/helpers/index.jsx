@@ -8,5 +8,9 @@ export default class Helpers {
 
         return f;
     }
+
+    static convertToMoney(data){
+        return parseFloat(data).toLocaleString('pt-BR',{ style: 'currency', currency: 'BRL' });
+    }
     
 }

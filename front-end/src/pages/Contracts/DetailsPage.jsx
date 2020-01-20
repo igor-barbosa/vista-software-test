@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import ContractsService from '../../services/ContractsService';
 import ContractsPaymentDialog from '../../components/Contracts/PaymentDialog';
 import CustomMessages from '../../components/Custom/Messages';
+import Helpers from '../../helpers';
 
 const cardTitle = (cod) => (
     <span>
@@ -257,9 +258,9 @@ export default function ContractsDetailsPage(props){
                                         </TableHead>
                                         <TableBody>
                                             <TableRow>
-                                                <TableCell>{state.data.ct_rent_amount}</TableCell>
-                                                <TableCell>{state.data.ct_condo_value}</TableCell>
-                                                <TableCell>{state.data.ct_IPTU}</TableCell>
+                                                <TableCell>{Helpers.convertToMoney(state.data.ct_rent_amount)}</TableCell>
+                                                <TableCell>{Helpers.convertToMoney(state.data.ct_condo_value)}</TableCell>
+                                                <TableCell>{Helpers.convertToMoney(state.data.ct_IPTU)}</TableCell>
                                                 <TableCell>{state.data.ct_administration_fee}%</TableCell>
                                             </TableRow>
                                         </TableBody>
@@ -299,12 +300,12 @@ export default function ContractsDetailsPage(props){
                                             <TableRow key={row.mp_order}>     
                                                 <TableCell align="center">{row.mp_order}/{state.data.monthly_payments.length}</TableCell>
                                                 <TableCell align="center">{row.mp_date.split('-').reverse().join('/')}</TableCell>
-                                                <TableCell align="center">{row.mp_rent_amount}</TableCell>
-                                                <TableCell align="center">{row.mp_condo_value}</TableCell>
-                                                <TableCell align="center">{row.mp_IPTU}</TableCell>
-                                                <TableCell align="center">{calculateAmountCharged(row)}</TableCell>       
-                                                <TableCell align="center">{calculateRepasse(row)}</TableCell>
-                                                <TableCell align="center">{row.mp_administration_fee}</TableCell>
+                                                <TableCell align="center">{Helpers.convertToMoney(row.mp_rent_amount)}</TableCell>
+                                                <TableCell align="center">{Helpers.convertToMoney(row.mp_condo_value)}</TableCell>
+                                                <TableCell align="center">{Helpers.convertToMoney(row.mp_IPTU)}</TableCell>
+                                                <TableCell align="center">{Helpers.convertToMoney(calculateAmountCharged(row))}</TableCell>       
+                                                <TableCell align="center">{Helpers.convertToMoney(calculateRepasse(row))}</TableCell>
+                                                <TableCell align="center">{Helpers.convertToMoney(row.mp_administration_fee)}</TableCell>
                                                 <TableCell align="center" className={getRowColor(row, row.mp_payment_up_to_date)}>{row.mp_payment_up_to_date}</TableCell>
                                                 <TableCell align="center" className={getRowColor(row, row.mp_transfer_performed)}>{row.mp_transfer_performed}</TableCell>
                                                 <TableCell align="right">

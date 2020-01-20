@@ -15,6 +15,7 @@ import {Link} from 'react-router-dom';
 
 import contractsActions from '../../../redux/contracts/actions';
 import ContractsService from '../../../services/ContractsService';
+import Helpers from '../../../helpers';
 
 const useStyles = makeStyles({
     tableContainer: {
@@ -91,8 +92,8 @@ export default function ContractsTable(props) {
                                 <TableCell align="center">{contract.cl_name}</TableCell>
                                 <TableCell align="center">{contract.ct_start_date.split('-').reverse().join('/')}</TableCell>
                                 <TableCell align="center">{contract.ct_end_date.split('-').reverse().join('/')}</TableCell>
-                                <TableCell align="center">{contract.ct_administration_fee}</TableCell>
-                                <TableCell align="center">{contract.ct_rent_amount}</TableCell>                                
+                                <TableCell align="center">{contract.ct_administration_fee}%</TableCell>
+                                <TableCell align="center">{Helpers.convertToMoney(contract.ct_rent_amount)}</TableCell>        
                                 <TableCell align="right">
                                     <IconButton size="small" onClick={handleRemove(contract.ct_id, key)}>
                                         <Icon>delete</Icon>
