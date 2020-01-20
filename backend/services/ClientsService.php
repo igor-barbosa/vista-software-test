@@ -25,7 +25,7 @@
             
             $client = $ClientModel->getClientByEmail($data['cl_email']);
 
-            if((!empty($client) && $clientId == 0) || $client['cl_id'] != $clientId){
+            if((!empty($client) && $clientId == 0) || (!empty($client) && $client['cl_id'] != $clientId)){
                 requestResponse(array('messages' => ['Já existe um cliente cadastrado com o e-mail informado.']), true);
             }
 

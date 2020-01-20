@@ -1,31 +1,14 @@
 <?php
     require_once(__DIR__."/../../../backend/config.php");
 
-    $propertyOwnerId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
-    if($propertyOwnerId === 0) {
-        requestResponse([
-            'messages' => ['Não foi possível identificar o proprietário desejado.']
-        ], true);
-    }
-
-    [$data, $errors] = Validation::validate($_POST, [
-        ['po_name', 'Nome Completo', Validation::isRequired(), Validation::names(), Validation::max(80)],
-        ['po_email', 'E-mail', Validation::isRequired(), Validation::email(), Validation::max(150)],
-        ['po_transfer_day', 'Dia para repasse', Validation::isRequired(), Validation::numbers(), Validation::greaterThan(0), Validation::lessThan(28)]
-    ]);
-        
-    if(count($errors) > 0) {        
-        requestResponse(['messages' => $errors], true);
-    }
-
     $PropertyOwner = new PropertyOwner();
-    
-    $propertyOwner = $PropertyOwner->getPropertyOwnerByEmail($data['po_email']);
+    $PropertyOwnerService = new PropertyOwnerService();
 
-    if(count($propertyOwner) && $propertyOwner['po_id'] != $propertyOwnerId){
-        requestResponse(array('messages' => ['Já existe um proprietário cadastrado com o e-mail informado.']), true);
-    }
+    $propertyOwnerId = $PropertyOwnerService->getUrlParamPropertyOwnerId();
+
+    $data = $PropertyOwnerService->createOrEditPropertyOwnerRequestValidation($_POST);
+    $PropertyOwnerService->createOrEditPropertyOwnerRequestCustomValidation($data, $propertyOwnerId);
 
     $updated = $PropertyOwner->update($propertyOwnerId, $data);
+    
     requestResponse($updated);
