@@ -2,10 +2,10 @@
 
 require_once(__DIR__."/../../../backend/config.php");
 
-
-$contractId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
 $ContractsModel = new Contracts();
+$ContractsService = new ContractsService();
+
+$contractId = $ContractsService->getUrlParamContractId();
 
 $contract = $ContractsModel->getContractById($contractId);
 

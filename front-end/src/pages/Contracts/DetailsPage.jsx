@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 
 import ContractsService from '../../services/ContractsService';
 import ContractsPaymentDialog from '../../components/Contracts/PaymentDialog';
+import CustomMessages from '../../components/Custom/Messages';
 
 const cardTitle = (cod) => (
     <span>
@@ -111,10 +112,7 @@ export default function ContractsDetailsPage(props){
                 setState({data: resp.data.data , messages: []});
             } else {
                 if(!!resp.data.data.messages) {
-                    setState({
-                        ...state,
-                        messages: resp.data.data.messages
-                    });
+                    setState({...state, messages: resp.data.data.messages });
                 } else {
                     enqueueSnackbar('Não foi possível carregar os dados.', {
                         variant: 'error'
@@ -148,10 +146,9 @@ export default function ContractsDetailsPage(props){
             
             <CardContent>
                 <Grid container spacing={2}>
-                    
                     {state.messages.length > 0 && (
                         <Grid item xs={12} md={12}>
-                            <displayMessages messages={state.messages} />
+                            <CustomMessages messages={state.messages} />
                         </Grid>
                     )}
                     {!!state.data && (
