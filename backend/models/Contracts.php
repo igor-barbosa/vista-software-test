@@ -81,9 +81,9 @@
         public function getContractById($id) {            
             $contract = $this->pdo->query("
                 SELECT * FROM {$this->table} 
-                    INNER JOIN clients ON cl_id = ct_cl_id
-                    INNER JOIN properties ON pro_id = ct_pro_id
-                    INNER JOIN property_owner ON po_id = ct_po_id
+                    INNER JOIN clients ON cl_id = ct_cl_id AND cl_deleted_at IS NULL
+                    INNER JOIN properties ON pro_id = ct_pro_id AND pro_deleted_at IS NULL
+                    INNER JOIN property_owner ON po_id = ct_po_id AND po_deleted_at IS NULL
                 WHERE ct_id={$id}
                 AND {$this->deletedAt} IS NULL
             ")->fetch(PDO::FETCH_ASSOC);
