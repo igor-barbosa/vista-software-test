@@ -145,18 +145,19 @@ export default function LayoutAdmin(props) {
               <ListItemText primary="Clientes" />
             </ListItem>
             
-            <ListItem button component={Link} to="/imoveis">
-              <ListItemIcon>
-                <img src="/images/property.svg" width={24} height={24}/>
-              </ListItemIcon>
-              <ListItemText primary="Imóveis" />
-            </ListItem>
-
             <ListItem button component={Link} to="/proprietarios">
               <ListItemIcon>
                 <img src="/images/property-owner.svg" width={24} height={24}/>
               </ListItemIcon>
               <ListItemText primary="Proprietários" />
+            </ListItem>
+
+
+            <ListItem button component={Link} to="/imoveis">
+              <ListItemIcon>
+                <img src="/images/property.svg" width={24} height={24}/>
+              </ListItemIcon>
+              <ListItemText primary="Imóveis" />
             </ListItem>
             
             <ListItem button component={Link} to="/contratos">

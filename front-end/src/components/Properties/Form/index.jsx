@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field } from 'formik'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import { CardHeader, Grid, makeStyles } from '@material-ui/core';
+import { CardHeader, Grid, makeStyles, TextField, MenuItem } from '@material-ui/core';
 import * as Yup from 'yup';
 import LayoutLoadingOverlayArea from '../../Layout/Loading/OverlayArea';
 import CustomField from '../../Custom/Field';
@@ -12,6 +12,7 @@ import * as PropTypes from 'prop-types';
 
 import { Icon as Iconify } from '@iconify/react';
 import broomIcon from '@iconify/icons-mdi/broom';
+import PropertyOwnerService from '../../../services/PropertyOwnerService';
 
 PropertiesForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -75,6 +76,22 @@ export default function PropertiesForm(props) {
 
     const fieldWidthMd = (!!props.fieldsFullWidth) ? 12 : 3;
 
+    const [propertyOwners, setPropertyOwners] = useState({
+        loading: false,
+        data: []
+    });
+
+    useEffect(() => {
+        (async () => {
+            const resp = await PropertyOwnerService.getPropertyOwners();
+            if(!resp.data.error){
+                setPropertyOwners({ loading: false, data: resp.data.data });
+            } else {
+                setPropertyOwners({ loading: false, data: [] });
+            }
+        })()
+    }, []);
+
     return (
         <Formik 
             initialValues={props.initialValues} 
@@ -92,7 +109,12 @@ export default function PropertiesForm(props) {
                             )}
                             <Grid container spacing={3}>
                                 <Grid item xs={12} md={12}>
-                                    <Field fullWidth name="pro_po_id" label="Proprietário" component={CustomField} />
+                                    <Field fullWidth select name="pro_po_id" label="Proprietário" component={CustomField}>
+                                        <MenuItem value="" disabled>Selecione ...</MenuItem>
+                                        {propertyOwners.data.map((propertyOwner, key) => (
+                                            <MenuItem value={propertyOwner.po_id} key={key}>{propertyOwner.po_name}</MenuItem>
+                                        ))}
+                                    </Field>
                                 </Grid>
                                 <Grid item xs={12} md={3}>
                                     <Field fullWidth name="pro_cep" label="CEP" component={CustomField} />
