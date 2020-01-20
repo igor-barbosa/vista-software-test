@@ -18,3 +18,27 @@ function convertBrMoney($money) {
         return (float) trim($money);
     }
 }
+
+function arrayTrim(&$array) {
+    foreach($array as $key => $value){
+        if(is_string($value)){
+            $array[$key] = trim($value);
+        }
+    }
+}
+
+function convertArrayProperNames(&$array, $keys = []) {
+    foreach($keys as $key){
+        if(!empty($array[$key])){
+            $array[$key] = ucwords(strtolower($array[$key]));
+        }
+    }
+}
+
+function arrayStrToLower(&$array, $keys = []) {
+    foreach($keys as $key){
+        if(!empty($array[$key])){
+            $array[$key] = strtolower($array[$key]);
+        }
+    }
+}
