@@ -6,7 +6,7 @@ export default function HomePage(){
     
     return (
         <div>
-            HOME PAGE
+            Página Inicial
         </div>
     );
 }

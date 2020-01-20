@@ -107,7 +107,7 @@ export default function ClientTable(props) {
                             <TableCell align="center">Cliente</TableCell>
                             <TableCell align="center">E-mail</TableCell>
                             <TableCell align="center">Telefone</TableCell>
-                            <TableCell align="center">Opções</TableCell>
+                            <TableCell align="right">Opções</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

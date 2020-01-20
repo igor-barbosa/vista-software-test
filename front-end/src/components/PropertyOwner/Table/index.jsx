@@ -107,7 +107,7 @@ export default function PropertyOwnerTable(props) {
                             <TableCell align="center">Proprietário</TableCell>
                             <TableCell align="center">E-mail</TableCell>
                             <TableCell align="center">Dia de Repasse</TableCell>
-                            <TableCell align="center">Opções</TableCell>
+                            <TableCell align="right">Opções</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
