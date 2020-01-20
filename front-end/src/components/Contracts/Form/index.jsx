@@ -238,10 +238,10 @@ export default function ContractsForm(props) {
                                     </Field>
                                 </Grid>
                                 <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_start_date" label="Início do contrato" component={CustomField} />
+                                    <Field fullWidth name="ct_start_date" label="Início da contratação" component={CustomField} />
                                 </Grid>
                                 <Grid item xs={12} md={4}>
-                                    <Field fullWidth name="ct_end_date" label="Fim do contrato" component={CustomField} />
+                                    <Field fullWidth name="ct_end_date" label="Fim da contratação" component={CustomField} />
                                 </Grid>
                                 <Grid item xs={12} md={4}>
                                     <Field fullWidth name="ct_administration_fee" label="Taxa de administração" component={CustomFieldPercentual} />
